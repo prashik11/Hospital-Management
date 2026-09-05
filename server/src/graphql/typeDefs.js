@@ -37,6 +37,11 @@ const typeDefs = gql`
     createdAt: String!
   }
 
+  input AddDepartmentInput {
+    name: String!
+    description: String
+  }
+
   input BookAppointmentInput {
     patientName: String!
     mobile: String!
@@ -47,6 +52,15 @@ const typeDefs = gql`
     time: String!
   }
 
+
+  type TimeSlot {
+  id: ID!
+  doctorId: ID!
+  date: String!
+  time: String!
+  isBooked: Boolean!
+}
+
   type Query {
     doctors: [Doctor!]!
     doctor(id: ID!): Doctor
@@ -55,10 +69,16 @@ const typeDefs = gql`
     department(id: ID!): Department
 
     appointment(appointmentNumber: String!): Appointment
+
+    availableSlots(
+  doctorId: ID!
+  date: String!
+): [TimeSlot!]!
   }
 
   type Mutation {
     bookAppointment(input: BookAppointmentInput!): Appointment!
+    addDepartment(input: AddDepartmentInput!): Department!
   }
 `;
 

@@ -19,6 +19,7 @@
     "express": "^5.2.1",
     "graphql": "^16.11.0",
     "graphql-tag": "^2.12.7",
+    "mongodb": "^7.6.0",
     "mongoose": "^9.9.4"
   },
   "devDependencies": {

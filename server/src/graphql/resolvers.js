@@ -1,6 +1,8 @@
 const Doctor = require("../models/Doctor");
 const Department = require("../models/Department");
 const Appointment = require("../models/Appointment");
+const TimeSlot = require("../models/TimeSlot");
+const generateTimeSlots = require("../utils/slotGenerator");
 
 const generateAppointmentNumber = async () => {
   const year = new Date().getFullYear();
@@ -35,9 +37,30 @@ const resolvers = {
         appointmentNumber,
       });
     },
+    availableSlots: async (_, { doctorId, date }) => {
+      return await generateTimeSlots(doctorId, date);
+    },
   },
 
   Mutation: {
+
+    addDepartment: async (_, { input }) => {
+      const { name, description } = input;
+
+      const existingDepartment = await Department.findOne({ name });
+
+      if (existingDepartment) {
+        throw new Error("Department already exists");
+      }
+
+      const department = await Department.create({
+        name,
+        description,
+      });
+
+      return department;
+    },
+
     bookAppointment: async (_, { input }) => {
       const {
         patientName,

@@ -38,6 +38,12 @@ const appointmentSchema = new mongoose.Schema(
       required: true,
     },
 
+    slotId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "TimeSlot",
+      required: true,
+    },
+
     date: {
       type: String,
       required: true,
